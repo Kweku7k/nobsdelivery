@@ -22,8 +22,8 @@ pip install -r requirements.txt
 # Install uwsgi
 pip install uWSGI==2.0.23
 
-#Restart the forms application
-sudo systemctl restart forms.service
+#Restart the application
+sudo systemctl restart talanku.service
 
 # Deactivate the virtual environment
 #deactivate
