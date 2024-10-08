@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="row" style="justify-content: space-around; margin-top: 1vh;">
+        <div class="col-md-6">
+            <div class="defaultCard">
+                <form action="" method="post">
+                    {{form.hidden_tag()}}
+                    
+    <h4 style="text-align: center; width: 100%; ">Instant delivery.</h4>   
+    <h6 style="text-align: center; width: 100%; " class="text-muted">Estimated Time Of Arrival would be communicated.</h6>   
+
+    <hr/>
+    <h6 style="text-align: center;" class="text-muted">LOCATION INFORMATION</h6>
+
+    <hr/>
+    <h6 style="text-align: center;" class="text-muted">PERSONAL INFORMATION</h6>
+
+    <div class="inputTextHolder">
+        <h6>{{form.name.label}}</h6>
+        {{form.name (class="inputTextCard", placeholder="Enter the recipient name")}}
+        {% for error in form.name.errors %}
+        <h6 style="color: red; font-weight: 100;">{{error}}</h6>
+        {% endfor %}
+    </div>
+
+    <div class="inputTextHolder">
+        <h6>{{form.phone.label}}</h6>
+        {{form.phone (class="inputTextCard", placeholder="Enter the recipient phone")}}
+        {% for error in form.phone.errors %}
+        <h6 style="color: red; font-weight: 100;">{{error}}</h6>
+        {% endfor %}
+    </div>
+    
+    <div class="inputTextHolder">
+        <h6>{{form.description.label}}</h6>
+        {{form.description (class="inputTextCard", placeholder="Enter the recipient description")}}
+        {% for error in form.description.errors %}
+        <h6 style="color: red; font-weight: 100;">{{error}}</h6>
+        {% endfor %}
+    </div>
+
+    <hr/>
+    <h6 style="text-align: center;" class="text-muted">EXTRA INFORMATION</h6>
+
+
+    <div class="inputTextHolder">
+        <h6>{{form.picture.label}}</h6>
+        {{form.picture (class="inputTextCard", placeholder="Enter the recipient picture")}}
+        {% for error in form.picture.errors %}
+        <h6 style="color: red; font-weight: 100;">{{error}}</h6>
+        {% endfor %}
+    </div>
+
+   
+    <div class="inputTextHolder">
+        <h6>{{form.notes.label}}</h6>
+        {{form.notes (class="inputTextCard", placeholder="Enter the recipient notes")}}
+        {% for error in form.notes.errors %}
+        <h6 style="color: red; font-weight: 100;">{{error}}</h6>
+        {% endfor %}
+    </div>
+    <div class="inputTextHolder">
+        <h6>{{form.location.label}}</h6>
+        {{form.location (class="inputTextCard", placeholder="Enter the recipient location")}}
+        {% for error in form.location.errors %}
+        <h6 style="color: red; font-weight: 100;">{{error}}</h6>
+        {% endfor %}
+    </div>
+
+    <br/>
+     {{form.submit(class="pill-button", onclick="showLoadingScreen()", style="width: 100%;")}}
+        </div>
+    </div>
+</div>
+</div>
+
+
+{% endblock %}
