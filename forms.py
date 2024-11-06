@@ -4,16 +4,16 @@ from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationE
 from wtforms.widgets import TextArea
 
 class Delivery(FlaskForm):
-    pickup = StringField('Pick Up', validators=[DataRequired()])
-    name = StringField('Name', validators=[DataRequired()])
+    pickup = StringField('Pick Up')
+    name = StringField('Name')
     
-    dropoff = StringField('Drop Off', validators=[DataRequired()])
-    phone = StringField('Phone Number', validators=[DataRequired()])
+    dropoff = StringField('Drop Off')
+    phone = StringField('Phone Number')
 
-    picture = StringField('Picture', validators=[DataRequired()])
+    picture = StringField('Picture')
 
-    description = StringField('Description',widget=TextArea(), validators=[DataRequired()])
-    notes = StringField('Notes', widget=TextArea(), validators=[DataRequired()])
+    description = StringField('Description',widget=TextArea())
+    notes = StringField('Notes', widget=TextArea())
 
-    location = StringField('Location', widget=TextArea(), validators=[DataRequired()])
+    location = StringField('Location', widget=TextArea())
     submit = SubmitField('Proceed')

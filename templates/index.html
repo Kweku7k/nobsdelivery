@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block head %}
+<script src="{{url_for('static', filename='js/sessionstorage.js')}}"></script>
+{% endblock %}
+
 {% block body %}
 
 
@@ -7,7 +11,7 @@
     <div class="row" style="justify-content: space-around; margin-top: 1vh;">
         <div class="col-md-6">
             <div class="defaultCard">
-                <form action="" method="post">
+                <form action="" method="post" id="order_form">
                     {{form.hidden_tag()}}
                     
     <h4 style="text-align: center; width: 100%; ">Instant delivery.</h4>   
@@ -47,13 +51,13 @@
     <h6 style="text-align: center;" class="text-muted">EXTRA INFORMATION</h6>
 
 
-    <div class="inputTextHolder">
+    <!-- <div class="inputTextHolder">
         <h6>{{form.picture.label}}</h6>
         {{form.picture (class="inputTextCard", placeholder="Enter the recipient picture")}}
         {% for error in form.picture.errors %}
         <h6 style="color: red; font-weight: 100;">{{error}}</h6>
         {% endfor %}
-    </div>
+    </div> -->
 
    
     <div class="inputTextHolder">
