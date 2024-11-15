@@ -25,7 +25,7 @@
 
     <div class="inputTextHolder">
         <h6>{{form.name.label}}</h6>
-        {{form.name (class="inputTextCard", placeholder="Enter the recipient name")}}
+        {{form.name (class="inputTextCard", placeholder="eg. Esi Amina")}}
         {% for error in form.name.errors %}
         <h6 style="color: red; font-weight: 100;">{{error}}</h6>
         {% endfor %}
@@ -33,7 +33,7 @@
 
     <div class="inputTextHolder">
         <h6>{{form.phone.label}}</h6>
-        {{form.phone (class="inputTextCard", placeholder="Enter the recipient phone")}}
+        {{form.phone (class="inputTextCard", placeholder="Eg. 0241231231")}}
         {% for error in form.phone.errors %}
         <h6 style="color: red; font-weight: 100;">{{error}}</h6>
         {% endfor %}
@@ -41,7 +41,9 @@
     
     <div class="inputTextHolder">
         <h6>{{form.description.label}}</h6>
-        {{form.description (class="inputTextCard", placeholder="Enter the recipient description")}}
+        {{form.description (class="inputTextCard", placeholder="Eg Plain rice 3 cups, 2 eggs, 1 sausage and coleslaw from Iklina")}}
+        <h6 style="color: black; font-weight: 100;">Please be descriptive and conscise for an effective delivery</h6>
+        
         {% for error in form.description.errors %}
         <h6 style="color: red; font-weight: 100;">{{error}}</h6>
         {% endfor %}
@@ -62,14 +64,14 @@
    
     <div class="inputTextHolder">
         <h6>{{form.notes.label}}</h6>
-        {{form.notes (class="inputTextCard", placeholder="Enter the recipient notes")}}
+        {{form.notes (class="inputTextCard", placeholder="Any notes? Eg. I want the food in a pack not in rubber.")}}
         {% for error in form.notes.errors %}
         <h6 style="color: red; font-weight: 100;">{{error}}</h6>
         {% endfor %}
     </div>
     <div class="inputTextHolder">
         <h6>{{form.location.label}}</h6>
-        {{form.location (class="inputTextCard", placeholder="Enter the recipient location")}}
+        {{form.location (class="inputTextCard", placeholder="Enter your location eg. Pronto Hostel")}}
         {% for error in form.location.errors %}
         <h6 style="color: red; font-weight: 100;">{{error}}</h6>
         {% endfor %}

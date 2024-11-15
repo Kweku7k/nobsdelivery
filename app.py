@@ -23,6 +23,7 @@ print(app.config['SQLALCHEMY_DATABASE_URI'])
 from models import *
 
 
+@app.route('/cu15',methods=['GET','POST'])
 @app.route('/',methods=['GET','POST'])
 async def details(): 
     form = Delivery()
