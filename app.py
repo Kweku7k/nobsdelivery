@@ -51,21 +51,25 @@ async def details():
                 db.session.commit()
 
                 # send the order to the rider   
-                await send_message(chat_id="2082809928",text=f"New Order: {order.user} - {order.phone} - {order.location} - {order.order} - {order.notes}")
 
                 return redirect(url_for('order_details', id=order.id))
             except Exception as e:
                 print(e)
+            await send_message(chat_id="2082809928",text=f"New Order: {order.user} - {order.phone} - {order.location} - {order.order} - {order.notes}")
             
         else:
             print(form.errors)
     return render_template('index.html', form=form)
 
+
 # 
 @app.route('/order_details/<int:id>', methods=['GET', 'POST'])
 def order_details(id):
     order = Order.query.get_or_404(id)
-    return render_template('order_details.html', order = order)
+    order_status = order.status
+    return render_template('order_details.html', order = order,order_status=order_status)
+
+
 
 # prompt: write an api that takes a rider token and a rider active status ie True or False
 @app.route('/rider/<string:token>/<int:active>', methods=['GET', 'POST'])
@@ -83,7 +87,6 @@ async def rider_status(token, active):
 
     pprint.pprint(body)
     print(type(body))
-    
 
     print(f"Attempting to find Rider: {token}")
     rider = DeliveryRider.query.filter_by(telegram_token=token).first()

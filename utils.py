@@ -19,7 +19,7 @@ async def send_message(chat_id = "-4517477711", text="Testing"):
 
 
 # Replace 'YOUR_CHAT_ID' with the chat ID you want to send messages to
-chat_id = 'YOUR_CHAT_ID'  # e.g., your user ID or group ID
-message = "Hello from my bot!"
+# chat_id = 'YOUR_CHAT_ID'  # e.g., your user ID or group ID
+# message = "Hello from my bot!"
 
-# send_message(chat_id, message)
+# send_message(chat_id, message)    

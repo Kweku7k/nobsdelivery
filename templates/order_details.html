@@ -1,35 +1,52 @@
 {% extends "layout.html" %}
 
 {% block body %}
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <div class="container">
     <div class="row">
 
-        <h6>Order Status: {{order.status}}</h6>
-        <h1>Ghc {{order.total}}</h1>
-        <h4>Testing</h4>
+        <h6 class="mt-2">Order Status: {{order.status}}</h6>
+
+        <h1>{{order.total}}</h1>
+        <h4>{{order.name}}</h4>
     </div>
     
     <div class="container">
         <progress value="50" max="100" style="width: 100%;"></progress>
     </div>
 
-        <h1 style="text-align: center;">Looking for a delivery person for you</h1>
-        <h6>Please wait while we find someone to fufil your order.</h6>
-
-        <button class="pill-button full" style="background-color: red;">Cancel</button>
-
+    <h6 class="text-center">Please wait while we find someone to fufil your order.</h6>
+        <h1 style="text-align: center;">Connecting Your Order Now</h1>
+        <div class="mx-auto d-flex justify-content-center" style=" ">
+            <img src="https://img.freepik.com/premium-vector/order-verification-illustration-designed-flat-style_203633-6579.jpg?semt=ais_hybrid" style="width:300px;">
+            </div>
+       
         <hr/>
-        <h6>Order</h6>
+        <div class=" justify-space-between" style="justify-content: space-between;">
+        <h6><i class="bi bi-check-circle-fill" style="color:blue;"></i> Order: </h6>
         <h4>{{order.order}}</h4>
+        </div>
+        <hr>
 
-        <h6>Notes</h6>
-        <h4>{{order.notes}}</h4>
 
-        <h6>Time Requested</h6>
+        <div class=" justify-space-between" style="justify-content: space-between;">
+            <h6><i class="bi bi-check-circle-fill" style="color:blue;"></i> Notes: </h6>
+            <h4>{{order.notes}}</h4>
+        </div>
+        <hr>
+
+
+        <div class="d-flex justify-space-between" style="justify-content: space-between;">
+        <h6><i class="bi bi-check-circle-fill" style="color:blue;"></i> Time Requested</h6>
         <h4>{{order.order}}</h4>
+        </div>
 
-        
+
+       
+        <br>
+
+        <button class="pill-button" style="background-color: red; bottom: 30px; width: 90%; position:fixed; margin-right:300px;">Cancel My Order</button>
+
 </div>
 
 {% endblock %}
