@@ -15,5 +15,5 @@ class Delivery(FlaskForm):
     description = StringField('Description',widget=TextArea())
     notes = StringField('Notes', widget=TextArea())
 
-    location = StringField('Location', widget=TextArea(), validators=[DataRequired(), Length(min=10, max=10)])
+    location = StringField('Location', widget=TextArea(), validators=[DataRequired()])
     submit = SubmitField('Proceed')
