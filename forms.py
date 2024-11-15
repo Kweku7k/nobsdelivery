@@ -8,12 +8,12 @@ class Delivery(FlaskForm):
     name = StringField('Name')
     
     dropoff = StringField('Drop Off')
-    phone = StringField('Phone Number', Validators=[DataRequired(), Length(min=10, max=10)])
+    phone = StringField('Phone Number', validators=[DataRequired(), Length(min=10, max=10)])
 
     picture = StringField('Picture')
 
     description = StringField('Description',widget=TextArea())
     notes = StringField('Notes', widget=TextArea())
 
-    location = StringField('Location', widget=TextArea(), Validators=[DataRequired(), Length(min=10, max=10)])
+    location = StringField('Location', widget=TextArea(), validators=[DataRequired(), Length(min=10, max=10)])
     submit = SubmitField('Proceed')
