@@ -16,6 +16,7 @@ app=Flask(__name__)
 app.config['SECRET_KEY'] = 'c2ba24216b13s5e0c676d8b8021579fde'
 app.config['SQLALCHEMY_DATABASE_URI']= os.environ.get('DELIVERY_DB_URL')
 
+
 db.init_app(app)
 migrate = Migrate(app, db)
 
@@ -85,6 +86,13 @@ async def details():
 def order_details(id):
     order = Order.query.get_or_404(id)
     return render_template('order_details.html', order = order)
+
+
+
+
+@app.route('/order_details1', methods=['GET', 'POST'])
+def order_details1():
+    return render_template('order_details.html')
 
 # prompt: write an api that takes a rider token and a rider active status ie True or False
 @app.route('/rider/<string:token>/<int:active>', methods=['GET', 'POST'])
