@@ -6,6 +6,7 @@
 #Delete the previous environment
 sudo rm -r env
 
+
 # Set the name of the virtual environment
 venv_name="env"
 
@@ -20,7 +21,7 @@ source $venv_name/bin/activate
 pip install -r requirements.txt
 
 # Install uwsgi
-# pip install uWSGI==2.0.23
+pip install uWSGI==2.0.23
 
 #Restart the application
 sudo systemctl restart talanku.service
