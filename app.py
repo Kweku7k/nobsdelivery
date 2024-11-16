@@ -3,6 +3,7 @@ import os
 import pprint
 from flask import Flask,redirect,url_for,render_template,request
 from flask_sqlalchemy import SQLAlchemy
+import urllib
 from apiresponse import ApiResponse
 from forms import Delivery
 # from services import createOrder
@@ -21,6 +22,23 @@ migrate = Migrate(app, db)
 print(app.config['SQLALCHEMY_DATABASE_URI'])
 
 from models import *
+
+
+def votingAlert(params):
+    try:
+        url = "https://api.telegram.org/bot5885119922:AAEN5JGeqkIza_kgc3eObzJuCdV3FK_9BsE/sendMessage?chat_id=-903004895&text=" + urllib.parse.quote(params)
+        content = urllib.request.urlopen(url).read()
+        app.logger.info(content)
+        return content
+    except Exception as e:
+        app.logger.info(e)
+        return e
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    votingAlert(str(error) + "\n" + str(request.url) + "\n" )
+    return render_template('500.html'), 500
+
 
 
 @app.route('/cu15',methods=['GET','POST'])
