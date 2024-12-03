@@ -43,9 +43,6 @@ def internal_server_error(error):
 
 
 
-
-
-
 @app.route('/cu15',methods=['GET','POST'])
 @app.route('/',methods=['GET','POST'])
 async def details(): 
@@ -53,8 +50,6 @@ async def details():
     if request.method == 'POST':
         # create an order and send broadcast
         if form.validate_on_submit():
-            
-            current_date = datetime.now()
             print(form.data)
             data = form.data
 
@@ -67,11 +62,10 @@ async def details():
                 order = data.get('description'),
                 notes = data.get('notes'),
                 status = "pending",
-                date_created = current_date,
                 paid = False
             )
             
-            # await send_message(text=form.data)
+            await send_message(text=form.data)
             
             try:
                 db.session.add(order)
@@ -95,41 +89,11 @@ def order_details(id):
     return render_template('order_details.html', order = order)
 
 
-@app.route('/update_order_status/<int:id>/<string:status>', methods=['POST', 'GET'])
-def update_order_status(id,status):
-    print("id:",id)
-    print("status:",status)
-    try:
-        order= Order.query.get_or_404(id)
-        print("order:",order)
-        order.status=status
-        db.session.commit()
-        print("order.status:",order.status)
-    except Exception as e:
-        print(e)
-        print("status:",order.status)
-    return redirect (url_for('motordriver'))
-        
 
-@app.route('/cancel_order/<int:order_id>', methods=['POST'])
-def cancel_order(order_id):
-    # Fetch the order from the database
-    order = Order.query.get_or_404(order_id)
-    
-    # Perform the cancellation (e.g., set status to 'Cancelled')
-    if order.status != 'Cancelled':
-        order.status = 'Cancelled'
-        db.session.commit()
-        # Redirect to the Motor Delivery page
-        return redirect(url_for('details'))
-    else:
-        return redirect(url_for('details'))
-        # Redirect to a custom error or status page if needed
 
-@app.route('/motordriver', methods=['GET', 'POST'])
-def motordriver():
-    user = Order.query.order_by(Order.id.desc()).all()
-    return render_template('motor_delivery.html', user=user)
+@app.route('/motor_driver', methods=['GET', 'POST'])
+def motor_driver():
+    return render_template('motor_driver.html')
 
 # prompt: write an api that takes a rider token and a rider active status ie True or False
 @app.route('/rider/<string:token>/<int:active>', methods=['GET', 'POST'])

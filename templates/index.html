@@ -17,9 +17,7 @@
     <h4 style="text-align: center; width: 100%; ">Instant delivery.</h4>   
     <h6 style="text-align: center; width: 100%; " class="text-muted">Estimated Time Of Arrival would be communicated.</h6>   
 
-    <hr/>
-    <h6 style="text-align: center;" class="text-muted">LOCATION INFORMATION</h6>
-
+   
     <hr/>
     <h6 style="text-align: center;" class="text-muted">PERSONAL INFORMATION</h6>
 
@@ -53,13 +51,6 @@
     <h6 style="text-align: center;" class="text-muted">EXTRA INFORMATION</h6>
 
 
-    <!-- <div class="inputTextHolder">
-        <h6>{{form.picture.label}}</h6>
-        {{form.picture (class="inputTextCard", placeholder="Enter the recipient picture")}}
-        {% for error in form.picture.errors %}
-        <h6 style="color: red; font-weight: 100;">{{error}}</h6>
-        {% endfor %}
-    </div> -->
 
    
     <div class="inputTextHolder">
@@ -69,6 +60,11 @@
         <h6 style="color: red; font-weight: 100;">{{error}}</h6>
         {% endfor %}
     </div>
+
+
+    <hr/>
+    <h6 style="text-align: center;" class="text-muted">LOCATION INFORMATION</h6>
+
     <div class="inputTextHolder">
         <h6>{{form.location.label}}</h6>
         {{form.location (class="inputTextCard", placeholder="Enter your location eg. Pronto Hostel")}}
@@ -78,6 +74,7 @@
     </div>
 
     <br/>
+    
      {{form.submit(class="pill-button", onclick="showLoadingScreen()", style="width: 100%;")}}
         </div>
     </div>

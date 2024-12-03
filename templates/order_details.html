@@ -6,7 +6,17 @@
     <div class="card mt-3">
         <h6>Delivery Status </h6>
         <hr>
-        <progress value="20" max="100" style="width: 100%;"></progress>
+                    {% if order.status == 'pending'%}
+                    <progress value="20" max="100" style="width: 100%;"></progress>
+                    {% elif order.status == 'In-progress'%}
+                    <progress value="60" max="100" style="width: 100%;"></progress>
+                    {% elif order.status == 'Completed'%}
+                    <progress value="100" max="100" style="width: 100%;"></progress>
+                    {% elif order.status == 'Denied'%}
+                    <progress value="20" max="100" style="width: 100%; "></progress>
+                    {%endif%}
+                   
+
         <h4 class="mt-2">{{order.name}}</h4>
         <h6>Order Status: {{order.status}}</h6>
         <h6 class="text-muted fs-9">Order Id: #DPRS{{order.id}}</h6>
@@ -15,13 +25,33 @@
     
    
 
-    <div class="card" style="margin-bottom:30px;">
-        <h6 class="text-center">Please wait while we find someone to fufil your order.</h6>
-        <h1 style="text-align: center;">Connecting Your Order Now!</h1>
-        <div class="mx-auto d-flex justify-content-center" style=" ">
-            <img src="https://img.freepik.com/premium-vector/order-verification-illustration-designed-flat-style_203633-6579.jpg?semt=ais_hybrid" style="width:300px;">
-        </div>
-    </div>
+            <div class="card" style="margin-bottom:30px;">
+                {% if order.status == 'pending'%}
+                <h6 class="text-center">Please wait while we find someone to fufil your order.</h6>
+                <h1 style="text-align: center;">Connecting Your Order!</h1>
+                <div class="mx-auto d-flex justify-content-center" style=" ">
+                    <img src="https://img.freepik.com/premium-vector/order-verification-illustration-designed-flat-style_203633-6579.jpg?semt=ais_hybrid" style="width:300px;">
+                </div>
+                {% elif order.status == 'In-progress'%}
+                <h6 class="text-center">Motor Delivery Found.</h6>
+                <h1 style="text-align: center;">Delivery Is On The Way!</h1>
+                <div class="mx-auto d-flex justify-content-center" style=" ">
+                    <img src="https://img.freepik.com/premium-vector/delivery-guy-illustration_765582-67.jpg" style="width:300px;">
+                </div>
+                {% elif order.status == 'Completed'%}
+                <h6 class="text-center">Order Completed.</h6>
+                <h1 style="text-align: center;">Your Order Is Complete!</h1>
+                <div class="mx-auto d-flex justify-content-center" style=" ">
+                    <img src="https://am-cbr.net/wp-content/uploads/2022/10/black-delivery-man-holding-pizza-boxes-using-smart-W8AC8MN.png" style="width:300px;">
+                </div>
+                    {% elif order.status == 'Denied'%}
+                    <h6 class="text-center">Order Cancelled.</h6>
+                <h1 style="text-align: center;">Connecting Your Order Now!</h1>
+                <div class="mx-auto d-flex justify-content-center" style=" ">
+                    <img src="https://img.freepik.com/premium-vector/order-verification-illustration-designed-flat-style_203633-6579.jpg?semt=ais_hybrid" style="width:300px;">
+                </div>
+                    {%endif%}
+            </div>
        
        
 
@@ -44,13 +74,54 @@
 
         <div class="d-flex justify-space-between" style="justify-content: space-between;">
             <h6><i class="bi bi-check-circle-fill" style="color:blue;"></i> Time Requested</h6>
-            <h6></h6>
+            <h6>{{ order.date_created.strftime('%d-%h-%Y' ) }}</h6>
         </div>
         </div>
     <br>
 
-        <button class="pill-button" style="background-color: red; width: 100%;">Cancel My Order</button>
-
+    <form action="{{ url_for('cancel_order', order_id=order.id) }}" method="post">
+        <button type="submit" class="pill-button status-btn" style="width:100%; background-color: red;">
+            Cancel My Orders
+        </button>
+    </form>
 </div>
 
+
+
+
+
+<script>
+    function cancelOrder(button, orderId) {
+        // Confirmation dialog
+        if (!confirm('Are you sure you want to cancel this order?')) {
+            return;
+        }
+
+        // Send AJAX request to cancel the order
+        fetch(`/cancel_order/${orderId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to cancel order');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Order cancelled:', data);
+
+            // Update button text and appearance
+            button.setAttribute('data-status', 'Cancelled');
+            button.style.backgroundColor = 'gray';
+            button.disabled = true; // Disable button after cancellation
+            document.getElementById(`status-text-${orderId}`).innerText = 'Order Cancelled';
+        })
+        .catch(error => {
+            console.error('Error cancelling order:', error);
+        });
+    }
+</script>
 {% endblock %}
