@@ -1,7 +1,7 @@
 import json
 import os
 import pprint
-from flask import Flask,redirect,url_for,render_template,request
+from flask import Flask, flash,redirect,url_for,render_template,request
 from flask_sqlalchemy import SQLAlchemy
 import urllib
 from apiresponse import ApiResponse
@@ -78,7 +78,14 @@ async def details():
                 db.session.commit()
 
                 # send the order to the rider   
-                await send_message(chat_id="2082809928",text=f"New Order: {order.user} - {order.phone} - {order.location} - {order.order} - {order.notes}")
+                await send_message(chat_id="2082809928",
+                                   text=
+                                   f"New Order:\n"
+                    f"Name: {order.user}\n"
+                    f"Phone: {order.phone}\n"
+                    f"Location: {order.location}\n"
+                    f"Order: {order.order}\n"
+                    f"Notes: {order.notes}")
 
                 return redirect(url_for('order_details', id=order.id))
             except Exception as e:
@@ -86,6 +93,7 @@ async def details():
             
         else:
             print(form.errors)
+            
     return render_template('index.html', form=form)
 
 # 
@@ -93,6 +101,25 @@ async def details():
 def order_details(id):
     order = Order.query.get_or_404(id)
     return render_template('order_details.html', order = order)
+
+
+
+
+
+@app.route('/cancel_order/<int:order_id>', methods=['POST'])
+def cancel_order(order_id):
+    order = Order.query.get_or_404(order_id)
+    
+    if order.status != 'Cancelled':
+        cancel_reason = request.form.get('cancel_reason', None)
+        order.status = 'Cancelled'
+        order.cancel_reason = cancel_reason 
+        print('----------')
+        print(cancel_reason)
+        db.session.commit()
+        return redirect(url_for('details'))
+    else:
+        return redirect(url_for('details'))
 
 
 @app.route('/update_order_status/<int:id>/<string:status>', methods=['POST', 'GET'])
@@ -111,25 +138,14 @@ def update_order_status(id,status):
     return redirect (url_for('motordriver'))
         
 
-@app.route('/cancel_order/<int:order_id>', methods=['POST'])
-def cancel_order(order_id):
-    # Fetch the order from the database
-    order = Order.query.get_or_404(order_id)
-    
-    # Perform the cancellation (e.g., set status to 'Cancelled')
-    if order.status != 'Cancelled':
-        order.status = 'Cancelled'
-        db.session.commit()
-        # Redirect to the Motor Delivery page
-        return redirect(url_for('details'))
-    else:
-        return redirect(url_for('details'))
-        # Redirect to a custom error or status page if needed
+
 
 @app.route('/motordriver', methods=['GET', 'POST'])
 def motordriver():
     user = Order.query.order_by(Order.id.desc()).all()
     return render_template('motor_delivery.html', user=user)
+
+
 
 # prompt: write an api that takes a rider token and a rider active status ie True or False
 @app.route('/rider/<string:token>/<int:active>', methods=['GET', 'POST'])

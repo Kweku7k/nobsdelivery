@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <meta http-equiv="refresh" content="10"> 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://kit.fontawesome.com/091f1122a7.js" crossorigin="anonymous"></script>
@@ -35,20 +34,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{url_for('static', filename='js/location.js')}}"></script>
-    <script>
-      async function toggleStatus(driverId) {
-          const response = await fetch(`/toggle_status/${driverId}`, { method: "POST" });
-          const html = await response.text();
-          document.getElementById(`driver-${driverId}`).innerHTML = html;
-      }
 
-      async function refreshActiveDrivers() {
-          const response = await fetch('/active_drivers');
-          const html = await response.text();
-          document.getElementById("active-drivers").innerHTML = html;
-      }
-
-  </script>
   {% block head %}
   {% endblock %}
 

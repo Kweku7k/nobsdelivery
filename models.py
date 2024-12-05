@@ -7,6 +7,7 @@ class Order(db.Model):
     user = db.Column(db.String())
     phone = db.Column(db.String())
     location = db.Column(db.String())
+    cancel_reason = db.Column(db.String())
     order = db.Column(db.String())
     notes = db.Column(db.String())
     date_created = db.Column(db.DateTime, default=datetime.now())
@@ -27,6 +28,11 @@ class Order(db.Model):
             print(e)
             
         return order
+    
+class Driver(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    active = db.Column(db.Boolean, default=False)
 
 class DeliveryRider(db.Model):
     __tablename__ = 'delivery_riders'

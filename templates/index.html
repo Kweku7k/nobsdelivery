@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout copy.html" %}
 
 {% block head %}
 <script src="{{url_for('static', filename='js/sessionstorage.js')}}"></script>
@@ -19,6 +19,15 @@
 
    
     <hr/>
+    {% for driver in drivers %}
+    <div id="driver-{{ driver.id }}">
+        <p>Driver: {{ driver.name }}</p>
+        <p>Status: {{ 'Active' if driver.active else 'Not Active' }}</p>
+        <button onclick="toggleStatus({{ driver.id }})">
+            {{ 'Set Not Active' if driver.active else 'Set Active' }}
+        </button>
+    </div>
+{% endfor %}
     <h6 style="text-align: center;" class="text-muted">PERSONAL INFORMATION</h6>
 
     <div class="inputTextHolder">
@@ -55,7 +64,7 @@
    
     <div class="inputTextHolder">
         <h6>{{form.notes.label}}</h6>
-        {{form.notes (class="inputTextCard", placeholder="Any notes? Eg. I want the food in a pack not in rubber.")}}
+        {{form.notes (class="inputTextCard", placeholder="Any notes? Eg. I want the food in a pack from Iklina.")}}
         {% for error in form.notes.errors %}
         <h6 style="color: red; font-weight: 100;">{{error}}</h6>
         {% endfor %}

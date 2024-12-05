@@ -1,0 +1,20 @@
+{% extends "layout copy.html" %}
+
+{% block head %}
+<script src="{{url_for('static', filename='js/sessionstorage.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+
+
+<div id="driver-{{ driver.id }}">
+    <p>Driver: {{ driver.name }}</p>
+    <p>Status: {{ 'Active' if driver.active else 'Not Active' }}</p>
+    <button onclick="toggleStatus({{ driver.id }})">
+        {{ 'Set Not Active' if driver.active else 'Set Active' }}
+    </button>
+</div>
+
+
+
+{% endblock %}

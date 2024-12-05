@@ -3,6 +3,8 @@
 {% block body %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <div class="container">
+
+    <!--Delivery Status-->
     <div class="card mt-3">
         <h6>Delivery Status </h6>
         <hr>
@@ -14,47 +16,74 @@
                     <progress value="100" max="100" style="width: 100%;"></progress>
                     {% elif order.status == 'Denied'%}
                     <progress value="20" max="100" style="width: 100%; "></progress>
+                    {% elif order.status == 'Cancelled'%}
+                    <progress value="100" max="100" style="width: 100%; "  ></progress>     
                     {%endif%}
-                   
 
         <h4 class="mt-2">{{order.name}}</h4>
         <h6>Order Status: {{order.status}}</h6>
         <h6 class="text-muted fs-9">Order Id: #DPRS{{order.id}}</h6>
         
+        {% if order.status == 'pending'%}
+        <div class="d-flex text-primary align-items-center">
+            
+            <strong role="status">Searching...</strong>
+            <div class="spinner-border ms-auto" aria-hidden="true"></div>
+        </div>
+        {%elif order.status=='Denied'%}
+        <div class="d-flex text-primary align-items-center">
+            <strong role="status">Searching...</strong>
+            <div class="spinner-border ms-auto" aria-hidden="true"></div>
+        </div>
+        {%else%}
+        
+        {%endif%}
     </div>
-    
+    <!--End Delivery Status-->
    
 
+<!--Card for Status-->
             <div class="card" style="margin-bottom:30px;">
                 {% if order.status == 'pending'%}
-                <h6 class="text-center">Please wait while we find someone to fufil your order.</h6>
-                <h1 style="text-align: center;">Connecting Your Order!</h1>
+                <h6 class="text-center mb-3">Wait, while we find you a driver.</h6>
+                <h3 class="text-center">Connecting Your Order!</h3>
+               
                 <div class="mx-auto d-flex justify-content-center" style=" ">
-                    <img src="https://img.freepik.com/premium-vector/order-verification-illustration-designed-flat-style_203633-6579.jpg?semt=ais_hybrid" style="width:300px;">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/017/178/466/small_2x/navigation-map-planning-routes-traveling-by-car-distance-tracking-illustration-vector.jpg" lazy="loading"  style="width:300px; border-radius:10px;">
                 </div>
+               
+                
                 {% elif order.status == 'In-progress'%}
                 <h6 class="text-center">Motor Delivery Found.</h6>
-                <h1 style="text-align: center;">Delivery Is On The Way!</h1>
+                <h1 style="text-align: center;">Driver Is On The Way!</h1>
                 <div class="mx-auto d-flex justify-content-center" style=" ">
-                    <img src="https://img.freepik.com/premium-vector/delivery-guy-illustration_765582-67.jpg" style="width:300px;">
+                    <img src="https://img.freepik.com/premium-vector/delivery-guy-illustration_765582-67.jpg" style="width:300px;" lazy="loading" >
                 </div>
                 {% elif order.status == 'Completed'%}
                 <h6 class="text-center">Order Completed.</h6>
                 <h1 style="text-align: center;">Your Order Is Complete!</h1>
                 <div class="mx-auto d-flex justify-content-center" style=" ">
-                    <img src="https://am-cbr.net/wp-content/uploads/2022/10/black-delivery-man-holding-pizza-boxes-using-smart-W8AC8MN.png" style="width:300px;">
+                    <img src="https://am-cbr.net/wp-content/uploads/2022/10/black-delivery-man-holding-pizza-boxes-using-smart-W8AC8MN.png" lazy="loading" style="width:300px;">
                 </div>
                     {% elif order.status == 'Denied'%}
-                    <h6 class="text-center">Order Cancelled.</h6>
-                <h1 style="text-align: center;">Connecting Your Order Now!</h1>
+                    <h6 class="text-center">Driver Cancelled Order.</h6>
+                <h1 style="text-align: center;">All Drivers Are Busy Now.</h1>
                 <div class="mx-auto d-flex justify-content-center" style=" ">
-                    <img src="https://img.freepik.com/premium-vector/order-verification-illustration-designed-flat-style_203633-6579.jpg?semt=ais_hybrid" style="width:300px;">
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/order-canceled-illustration-download-in-svg-png-gif-file-formats--processing-cancel-retail-shipped-denied-food-delivery-pack-drink-illustrations-7569076.png?f=webp" lazy="loading"  style="width:300px;">
+                </div>
+                {% elif order.status == 'Cancelled'%}
+                    <h6 class="text-center">Order Cancelled.</h6>
+                <h1 style="text-align: center;">You Cancelled You Order.</h1>
+                <div class="mx-auto d-flex justify-content-center" style=" ">
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/order-canceled-illustration-download-in-svg-png-gif-file-formats--processing-cancel-retail-shipped-denied-food-delivery-pack-drink-illustrations-7569076.png?f=webp" lazy="loading"  style="width:300px;">
                 </div>
                     {%endif%}
             </div>
-       
-       
+<!-- End of Status Card  -->
 
+  
+       
+<!-- Delivery Item  -->
     <div class="card mb-3">
         <h6>Delivery Item </h6>
         <hr>
@@ -78,14 +107,71 @@
         </div>
         </div>
     <br>
+    <!-- End Od Delivery -->
 
+<!-- Model for user  -->
+    {% if order.status == 'Cancelled' %}
+    <a href="/"><button type="submit" class="pill-button status-btn mt-2 mb-5" style="width:100%; background-color: blue;">
+        Add New Order
+    </button></a>
+    {%elif order.status == 'pending'%}
+    <button type="submit" class="pill-button status-btn mb-5" style="width:100%; background-color: red;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Cancel My Orders
+    </button>
     <form action="{{ url_for('cancel_order', order_id=order.id) }}" method="post">
-        <button type="submit" class="pill-button status-btn" style="width:100%; background-color: red;">
-            Cancel My Orders
-        </button>
-    </form>
-</div>
+       
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Cancel Ride?</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="cancel_reason" id="" value="Requested wrong food" >
+              Requested wrong food
+            </label>
+          </div>
 
+          <div class="form-check mt-3">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="cancel_reason" id="" value="Wait time was too long" >
+              Wait time was too long
+            </label>
+          </div>
+
+          <div class="form-check mt-3">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="cancel_reason" id="" value="Requested by accident" >
+              Requested by accident
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer ">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Skip</button>
+          <button type="submit" class="btn btn-danger">Cancel Order </button>
+        </div>
+      </div>
+    </div>
+  </div>
+    </form>
+    {%elif order.status == 'Completed'%}
+    <a href="/"><button type="submit" class="pill-button status-btn mt-3 mb-5" style="width:100%; background-color: blue;">
+        Add New Order
+    </button></a>
+    {%elif order.status == 'Denied'%}
+    <a href="/"><button type="submit" class="pill-button status-btn mt-3 mb-5" style="width:100%; background-color: blue;">
+        Add New Order
+    </button></a>
+    
+    
+    {%endif%}
+
+</div>
+<!-- End of Model for user  -->
 
 
 
