@@ -71,7 +71,7 @@ async def details():
                 paid = False
             )
             
-            # await send_message(text=form.data)
+            await send_message(text=form.data)
             
             try:
                 db.session.add(order)
